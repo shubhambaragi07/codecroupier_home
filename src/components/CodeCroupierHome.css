@@ -9,6 +9,7 @@ html, body, #root{
   width:100% !important;
   min-height:100vh !important;
   background:#000 !important;
+  overflow-x:hidden !important;
 }
 
 .cc-home{
@@ -34,7 +35,6 @@ html, body, #root{
   background:var(--cc-black);
   color:var(--cc-silver-lt);
   font-family:var(--cc-font-body);
-  overflow-x:hidden;
   position:relative;
   isolation:isolate;
 }
@@ -64,8 +64,10 @@ html{ scroll-behavior:smooth; } /* safe to remove if your app already sets this 
 
 /* ---------- top nav ---------- */
 .cc-home header{
-  position:sticky; top:0; z-index:50;
+  position:fixed; top:0; left:0; right:0; width:100%; z-index:60;
   display:flex; align-items:center; justify-content:space-between;
+  gap:12px;
+  min-height:70px;
   padding:14px 32px;
   background:rgba(5,5,5,0.72);
   backdrop-filter:blur(14px);
@@ -73,36 +75,26 @@ html{ scroll-behavior:smooth; } /* safe to remove if your app already sets this 
   transition:background .3s ease, border-color .3s ease;
 }
 .cc-home header.scrolled{ background:rgba(3,3,3,0.92); border-color:#3a1015; }
-.cc-home .brand{ display:flex; align-items:center; gap:12px; }
+/* reserves the header's height in normal flow so fixed positioning
+   doesn't make the hero jump up underneath it */
+.cc-home .header-spacer{ height:70px; width:100%; }
+.cc-home .brand{ display:flex; align-items:center; gap:12px; min-width:0; flex-shrink:0; }
+.cc-home header .brand-logo{ height:40px; width:auto; display:block; }
 .cc-home .brand-icon{ width:38px; height:38px; flex-shrink:0; }
-.cc-home .brand-word{ display:flex; flex-direction:column; line-height:1; }
+.cc-home .brand-word{ display:flex; flex-direction:column; line-height:1; min-width:0; }
 .cc-home .brand-word b{
   font-family:var(--cc-font-head); font-weight:800; font-size:19px; letter-spacing:0.5px;
   background:linear-gradient(90deg,#fff, var(--cc-silver-lt));
   -webkit-background-clip:text; background-clip:text; color:transparent;
+  white-space:nowrap;
 }
 .cc-home .brand-word b span{
   background:linear-gradient(90deg, var(--cc-red-neon), var(--cc-red-deep));
   -webkit-background-clip:text; background-clip:text; color:transparent;
 }
-.cc-home .brand-word i{ font-style:normal; font-size:9px; letter-spacing:3px; color:var(--cc-silver-bd); margin-top:2px; }
+.cc-home .brand-word i{ font-style:normal; font-size:9px; letter-spacing:3px; color:var(--cc-silver-bd); margin-top:2px; white-space:nowrap; }
 
-.cc-home nav.menu{ display:flex; align-items:center; gap:34px; }
-.cc-home nav.menu a{
-  font-family:var(--cc-font-body); font-weight:500; font-size:14px; color:var(--cc-silver);
-  position:relative; padding:4px 0; transition:color .2s ease;
-}
-.cc-home nav.menu a::after{
-  content:''; position:absolute; left:0; bottom:-4px; width:0; height:2px;
-  background:var(--cc-purple); box-shadow:0 0 8px rgba(154,0,255,0.5);
-  transition:width .25s ease;
-}
-.cc-home nav.menu a:hover{ color:#fff; }
-.cc-home nav.menu a:hover::after{ width:100%; }
-.cc-home nav.menu a.active{ color:#fff; }
-.cc-home nav.menu a.active::after{ width:100%; }
-
-.cc-home .nav-actions{ display:flex; align-items:center; gap:12px; }
+.cc-home .nav-actions{ display:flex; align-items:center; gap:12px; flex-shrink:0; }
 
 .cc-home .btn{
   font-family:var(--cc-font-body); font-weight:600; font-size:13.5px;
@@ -127,14 +119,9 @@ html{ scroll-behavior:smooth; } /* safe to remove if your app already sets this 
   font-family:var(--cc-font-mono); font-size:12.5px; color:var(--cc-jackpot);
   background:rgba(0,255,179,0.06); border:1px solid rgba(0,255,179,0.3);
   padding:8px 14px; border-radius:20px;
+  white-space:nowrap;
 }
-.cc-home .status-pill .dot{ width:7px; height:7px; border-radius:50%; background:var(--cc-green); box-shadow:0 0 8px var(--cc-green); }
-
-.cc-home .hamburger{ display:none; width:22px; height:16px; position:relative; cursor:pointer; background:none; border:none; }
-.cc-home .hamburger span{ position:absolute; left:0; width:100%; height:2px; background:#fff; transition:.25s; }
-.cc-home .hamburger span:nth-child(1){ top:0; }
-.cc-home .hamburger span:nth-child(2){ top:7px; }
-.cc-home .hamburger span:nth-child(3){ top:14px; }
+.cc-home .status-pill .dot{ width:7px; height:7px; border-radius:50%; background:var(--cc-green); box-shadow:0 0 8px var(--cc-green); flex-shrink:0; }
 
 /* ---------- hero / slider ---------- */
 .cc-home .hero{ position:relative; z-index:1; height:640px; overflow:hidden; border-bottom:1px solid var(--cc-graphite); }
@@ -176,6 +163,7 @@ html{ scroll-behavior:smooth; } /* safe to remove if your app already sets this 
 }
 .cc-home .dealer-badge .dot{ width:6px; height:6px; border-radius:50%; background:var(--cc-green); box-shadow:0 0 6px var(--cc-green); }
 @media (max-width:900px){ .cc-home .dealer-frame{ width:240px; height:240px; margin:0 auto 10px; } }
+@media (max-width:480px){ .cc-home .dealer-frame{ width:180px; height:180px; } }
 
 .cc-home .eyebrow{
   font-family:var(--cc-font-mono); font-size:12px; letter-spacing:3px; color:var(--cc-cyan);
@@ -183,8 +171,8 @@ html{ scroll-behavior:smooth; } /* safe to remove if your app already sets this 
 }
 .cc-home .eyebrow::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--cc-cyan); box-shadow:0 0 8px var(--cc-cyan); }
 .cc-home .slide h1{
-  font-family:var(--cc-font-head); font-weight:800; font-size:clamp(34px,5.4vw,58px);
-  line-height:1.08; margin:0 0 18px; color:#fff;
+  font-family:var(--cc-font-head); font-weight:800; font-size:clamp(30px,5.4vw,58px);
+  line-height:1.1; margin:0 0 18px; color:#fff;
   text-shadow:0 0 26px rgba(255,46,85,0.22);
 }
 .cc-home .slide h1 .accent{
@@ -208,6 +196,12 @@ html{ scroll-behavior:smooth; } /* safe to remove if your app already sets this 
 .cc-home .dots{ position:absolute; bottom:26px; left:50%; transform:translateX(-50%); display:flex; gap:10px; z-index:5; }
 .cc-home .dots button{ width:26px; height:4px; border-radius:2px; border:none; cursor:pointer; background:var(--cc-graphite); transition:.25s ease; }
 .cc-home .dots button.active{ background:linear-gradient(90deg,var(--cc-red-neon),var(--cc-purple)); box-shadow:0 0 8px rgba(255,46,85,0.4); }
+
+@media (max-width:640px){
+  .cc-home .hero{ height:auto; min-height:560px; padding:110px 0 60px; }
+  .cc-home .slide{ padding:0 6vw; }
+  .cc-home .slide-arrow{ display:none; }
+}
 
 /* ---------- ticker ---------- */
 .cc-home .ticker-wrap{ position:relative; z-index:1; border-bottom:1px solid var(--cc-graphite); background:var(--cc-coal); padding:16px 0; overflow:hidden; }
@@ -265,7 +259,7 @@ html{ scroll-behavior:smooth; } /* safe to remove if your app already sets this 
 .cc-home .portrait-caption .tag2{ font-family:var(--cc-font-mono); font-size:10px; color:var(--cc-cyan); letter-spacing:1.5px; }
 
 .cc-home .panel-visual{ background:var(--cc-panel); border:1px solid var(--cc-graphite); border-radius:16px; padding:26px; font-family:var(--cc-font-mono); }
-.cc-home .panel-visual .row{ display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid #1c1c1c; font-size:13px; }
+.cc-home .panel-visual .row{ display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid #1c1c1c; font-size:13px; gap:12px; flex-wrap:wrap; }
 .cc-home .panel-visual .row:last-child{ border-bottom:none; }
 .cc-home .panel-visual .row span:first-child{ color:var(--cc-silver-bd); }
 .cc-home .panel-visual .row span:last-child{ color:var(--cc-silver-lt); }
@@ -303,14 +297,38 @@ html{ scroll-behavior:smooth; } /* safe to remove if your app already sets this 
   box-shadow:0 0 20px rgba(255,46,85,0.25); z-index:100;
   transition:transform .35s cubic-bezier(.65,0,.35,1);
   display:flex; align-items:center; gap:10px;
+  max-width:min(92vw, 420px); text-align:left;
 }
 .cc-home .toast.show{ transform:translateX(-50%) translateY(0); }
-.cc-home .toast .dot{ width:8px; height:8px; border-radius:50%; background:var(--cc-red-neon); box-shadow:0 0 8px var(--cc-red-neon); }
+.cc-home .toast .dot{ width:8px; height:8px; border-radius:50%; background:var(--cc-red-neon); box-shadow:0 0 8px var(--cc-red-neon); flex-shrink:0; }
+
+/* ---------- responsive nav breakpoints ---------- */
+/* No nav links anymore — the header is just the logo + CTAs, so it only
+   needs to shed the least-important pieces as space runs out. */
 
 @media (max-width:860px){
-  .cc-home nav.menu, .cc-home .status-pill{ display:none; }
-  .cc-home .hamburger{ display:block; }
+  .cc-home header{ padding:12px 5vw; min-height:66px; }
+  .cc-home .header-spacer{ height:66px; }
+  .cc-home header .nav-actions .status-pill{ display:none; }
   .cc-home .about{ gap:36px; }
+}
+
+@media (max-width:640px){
+  .cc-home .btn-get-started{ display:none; }
+  .cc-home header{ min-height:58px; }
+  .cc-home .header-spacer{ height:58px; }
+  .cc-home header .brand-logo{ height:32px; }
+  .cc-home .nav-actions{ gap:8px; }
+  .cc-home .nav-actions .btn{ padding:10px 16px; font-size:13px; }
+}
+
+@media (max-width:400px){
+  .cc-home header{ padding:10px 16px; min-height:50px; }
+  .cc-home .header-spacer{ height:50px; }
+  .cc-home header .brand-logo{ height:28px; }
+  .cc-home .nav-actions .btn{ padding:9px 13px; }
+  .cc-home section{ padding:64px 6vw; }
+  .cc-home .cta-band{ padding:64px 6vw; }
 }
 
 @media (prefers-reduced-motion: reduce){
