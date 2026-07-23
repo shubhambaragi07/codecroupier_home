@@ -8,7 +8,9 @@ import './CodeCroupierHome.css';
  *   1. Place cody-hero.png, cody-chips.png and cody-loop.mp4 in your
  *      Vite project's /public folder (referenced below as root-relative
  *      paths, e.g. "/cody-hero.png").
- *   2. Import and render <CodeCroupierHome /> from a route/page component.
+ *   2. Place your real whitepaper at /public/CodeCroupier-Whitepaper.pdf
+ *      so the "Download Whitepaper" button works.
+ *   3. Import and render <CodeCroupierHome /> from a route/page component.
  *
  * Everything is scoped under the .cc-home wrapper class in
  * CodeCroupierHome.css, so it won't clash with your existing theme.css
@@ -31,7 +33,6 @@ const NAV_LINKS = [
   ['Meet Cody', '#meet-cody'],
   ['About', '#about'],
   ['Whitepaper', '#whitepaper'],
-  ['Roulette', '#roulette'],
 ];
 
 const TOTAL_SLIDES = 3;
@@ -114,7 +115,7 @@ export default function CodeCroupierHome() {
       </div>
 
       <header className={scrolled ? 'scrolled' : ''}>
-        <a href="" className="brand" aria-label="CodeCroupier — home">
+        <a href="#home" className="brand" aria-label="CodeCroupier — home">
           <img
             className="brand-logo"
             src="/codecroupier-logo-100-transparent.png"
@@ -319,7 +320,7 @@ export default function CodeCroupierHome() {
           <h2>The whitepaper</h2>
           <p>Protocol mechanics, staking math, referral structure and roulette settlement logic — written up in full for anyone who wants to verify before they play.</p>
         </div>
-        <div className="cards" style={{ gridTemplateColumns: 'repeat(3,1fr)', maxWidth: 900, margin: '0 auto' }}>
+        <div className="cards cards-3">
           <div className="card">
             <div className="step">01</div>
             <h3>Protocol Overview</h3>
@@ -336,29 +337,17 @@ export default function CodeCroupierHome() {
             <p>What&apos;s fixed, what&apos;s variable, and the risks involved in participating.</p>
           </div>
         </div>
-        <div className="slide-cta" style={{ justifyContent: 'center', marginTop: 40 }}>
-          <button
-            className="btn btn-primary"
-            onClick={(e) => handleExtLink(e, 'Whitepaper PDF goes live at launch — check back soon.')}
-          >
-            Download Whitepaper
-          </button>
+          <div className="slide-cta" style={{ justifyContent: 'center', marginTop: 40 }}>
+            <a
+              className="btn btn-primary"
+              href="/CodeCroupier-Whitepaper.pdf"
+              download
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Download Whitepaper
+            </a>
           <button className="btn btn-secondary" onClick={() => scrollToId('risk')}>Read Risk Disclosure</button>
-        </div>
-      </section>
-
-      <section id="roulette" className="cta-band">
-        <div className="eyebrow" style={{ justifyContent: 'center' }}>$CCHIP · THE DEALER IS CODE</div>
-        <h2>Ready to sit at the table?</h2>
-        <p className="tag">CONNECT YOUR WALLET TO VIEW YOUR DASHBOARD</p>
-        <div className="slide-cta">
-          <button className="btn btn-primary" onClick={() => showToast()}>Connect Wallet</button>
-          <button
-            className="btn btn-secondary"
-            onClick={(e) => handleExtLink(e, 'Contract address will be published at launch.')}
-          >
-            View Contract
-          </button>
         </div>
       </section>
 
@@ -370,14 +359,44 @@ export default function CodeCroupierHome() {
             </div>
             <p>A fully on-chain casino platform powered by verifiable smart-contract logic and C-Chip ($CCHIP).</p>
           </div>
-          {/* <div className="foot-social">
-            <h4>Community</h4>
+          <div className="foot-social">
             <div className="social-row">
-              <a href="#" onClick={(e) => handleExtLink(e, 'Community links go live at launch.')}>Telegram</a>
-              <a href="#" onClick={(e) => handleExtLink(e, 'Community links go live at launch.')}>X / Twitter</a>
-              <a href="#" onClick={(e) => handleExtLink(e, 'Community links go live at launch.')}>Discord</a>
+              <a
+                className="social-icon"
+                href="#"
+                aria-label="Telegram"
+                onClick={(e) => handleExtLink(e, 'Community links go live at launch.')}
+              >
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21 4L2.5 11.2c-.9.35-.9 1.6.02 1.9l4.6 1.5 1.8 5.7c.3.9 1.5 1.1 2.1.35l2.5-3.1 4.6 3.4c.8.6 2 .15 2.2-.85L22 5.1c.2-1-.8-1.8-1.7-1.4l.7.3z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"/>
+                  <path d="M7.1 14.6l10-7.4-8.3 8.9" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"/>
+                </svg>
+              </a>
+              <a
+                className="social-icon"
+                href="#"
+                aria-label="X (Twitter)"
+                onClick={(e) => handleExtLink(e, 'Community links go live at launch.')}
+              >
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 4l7.2 9.4L4.4 20h2.3l6-6.7 4.5 6.7H21l-7.5-9.9L20 4h-2.3l-5.6 6.2L7.7 4H4z" fill="currentColor"/>
+                </svg>
+              </a>
+              <a
+                className="social-icon"
+                href="#"
+                aria-label="Discord"
+                onClick={(e) => handleExtLink(e, 'Community links go live at launch.')}
+              >
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8.5 8.6c2.3-1 4.7-1 7 0M7.3 15.4c2.9 1.3 6.5 1.3 9.4 0" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                  <path d="M8.7 6.8C6.6 7.4 5 8.6 5 8.6s-1.5 3-1.5 7.4c0 0 1.4 1.6 4.3 1.9l.8-1.4M15.3 6.8c2.1.6 3.7 1.8 3.7 1.8s1.5 3 1.5 7.4c0 0-1.4 1.6-4.3 1.9l-.8-1.4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <circle cx="9" cy="12.5" r="1.3" fill="currentColor"/>
+                  <circle cx="15" cy="12.5" r="1.3" fill="currentColor"/>
+                </svg>
+              </a>
             </div>
-          </div> */}
+          </div>
         </div>
         <div className="foot-bottom">
           <p id="risk">CodeCroupier and C-Chip involve on-chain risk. Digital assets are volatile — only participate with funds you can afford to lose. This is not financial advice.</p>

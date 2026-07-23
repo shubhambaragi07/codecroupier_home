@@ -257,6 +257,12 @@ html{ scroll-behavior:smooth; } /* safe to remove if your app already sets this 
 @media (max-width:1050px){ .cc-home .cards{ grid-template-columns:repeat(2,1fr); } }
 @media (max-width:600px){ .cc-home .cards{ grid-template-columns:1fr; } }
 
+/* whitepaper's 3-card grid — same responsive behavior as .cards, just
+   starts at 3 columns on desktop instead of 4 */
+.cc-home .cards.cards-3{ grid-template-columns:repeat(3,1fr); max-width:900px; margin:0 auto; }
+@media (max-width:1050px){ .cc-home .cards.cards-3{ grid-template-columns:repeat(2,1fr); max-width:100%; } }
+@media (max-width:600px){ .cc-home .cards.cards-3{ grid-template-columns:1fr; } }
+
 .cc-home .card{
   background:rgba(255,255,255,0.03); border:1px solid #1C1C1C; border-radius:14px; padding:28px 24px;
   transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease; position:relative;
@@ -301,27 +307,20 @@ html{ scroll-behavior:smooth; } /* safe to remove if your app already sets this 
 .cc-home .panel-visual .head{ font-family:var(--cc-font-body); font-weight:600; color:#fff; font-size:14px; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
 .cc-home .panel-visual .head::before{ content:''; width:8px; height:8px; border-radius:50%; background:var(--cc-purple); box-shadow:0 0 8px var(--cc-purple); }
 
-/* cta band */
-.cc-home .cta-band{
-  text-align:center; padding:90px 8vw; position:relative; z-index:1;
-  border-top:1px solid var(--cc-graphite); border-bottom:1px solid var(--cc-graphite);
-  background:radial-gradient(ellipse 60% 100% at 50% 100%, rgba(215,38,56,0.08), transparent);
-}
-.cc-home .cta-band h2{ font-family:var(--cc-font-head); font-weight:800; font-size:clamp(28px,4vw,42px); color:#fff; margin:0 0 6px; }
-.cc-home .cta-band .tag{ font-family:var(--cc-font-mono); color:var(--cc-silver-bd); font-size:13px; letter-spacing:1px; margin-bottom:30px; }
-.cc-home .cta-band .slide-cta{ margin-top:8px; }
-
 .cc-home footer{ position:relative; z-index:1; padding:52px 8vw 30px; border-top:1px solid var(--cc-graphite); background:var(--cc-coal); }
-.cc-home .foot-top{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:40px; margin-bottom:36px; }
+.cc-home .foot-top{ display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:40px; margin-bottom:36px; }
 .cc-home .foot-brand p{ color:var(--cc-silver); font-size:13.5px; max-width:300px; line-height:1.6; margin-top:14px; }
-.cc-home .foot-social h4{ font-family:var(--cc-font-head); font-size:13px; letter-spacing:1px; color:var(--cc-silver-lt); margin:0 0 14px; text-transform:uppercase; }
+
 .cc-home .social-row{ display:flex; gap:12px; flex-wrap:wrap; }
-.cc-home .social-row a{
-  font-family:var(--cc-font-mono); font-size:12.5px; color:var(--cc-silver-lt);
-  border:1px solid var(--cc-graphite); border-radius:20px; padding:9px 18px;
-  transition:.2s ease; white-space:nowrap;
+.cc-home .social-icon{
+  display:flex; align-items:center; justify-content:center;
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid var(--cc-graphite); color:var(--cc-silver-lt);
+  transition:.2s ease;
 }
-.cc-home .social-row a:hover{ border-color:var(--cc-cyan); color:#fff; box-shadow:0 0 14px rgba(0,232,255,0.2); }
+.cc-home .social-icon svg{ width:19px; height:19px; }
+.cc-home .social-icon:hover{ border-color:var(--cc-cyan); color:#fff; box-shadow:0 0 14px rgba(0,232,255,0.25); transform:translateY(-2px); }
+
 .cc-home .foot-bottom{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; border-top:1px solid var(--cc-graphite); padding-top:22px; }
 .cc-home .foot-bottom p{ font-size:12px; color:var(--cc-silver-bd); margin:0; max-width:640px; line-height:1.6; }
 .cc-home .foot-bottom .small{ font-family:var(--cc-font-mono); font-size:11.5px; }
@@ -384,7 +383,6 @@ html{ scroll-behavior:smooth; } /* safe to remove if your app already sets this 
   .cc-home .nav-links{ top:50px; }
   .cc-home header .brand-logo{ height:26px; }
   .cc-home section{ padding:64px 6vw; }
-  .cc-home .cta-band{ padding:64px 6vw; }
 }
 
 @media (prefers-reduced-motion: reduce){
