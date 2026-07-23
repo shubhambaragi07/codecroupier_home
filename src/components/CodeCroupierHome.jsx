@@ -16,14 +16,6 @@ import './CodeCroupierHome.css';
  * --cc-* custom properties instead.
  */
 
-const NAV_LINKS = [
-  { href: '#home', label: 'Home' },
-  { href: '#about', label: 'About' },
-  { href: '#how', label: 'How It Works' },
-  { href: '#roulette', label: 'Roulette' },
-  { href: '#whitepaper', label: 'Whitepaper' },
-];
-
 const TICKER_DATA = [
   ['CC-CHIP', '$1.08 USD', 'up'],
   ['NETWORK', 'BSC Mainnet', ''],
@@ -38,26 +30,15 @@ const DEFAULT_TOAST = 'Wallet not connected — this is a design preview.';
 
 export default function CodeCroupierHome() {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
   const [slide, setSlide] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [activeNav, setActiveNav] = useState('#home');
   const [toast, setToast] = useState({ show: false, msg: DEFAULT_TOAST });
   const toastTimeoutRef = useRef(null);
 
-  // header shrink + active-section highlighting on scroll
+  // header shrink on scroll
   useEffect(() => {
-    const sections = NAV_LINKS
-      .map(({ href }) => document.querySelector(href))
-      .filter(Boolean);
-
     function onScroll() {
       setScrolled(window.scrollY > 10);
-      let current = NAV_LINKS[0].href;
-      sections.forEach((sec, i) => {
-        if (window.scrollY >= sec.offsetTop - 120) current = NAV_LINKS[i].href;
-      });
-      setActiveNav(current);
     }
     onScroll();
     window.addEventListener('scroll', onScroll);
@@ -98,10 +79,6 @@ export default function CodeCroupierHome() {
     showToast(msg);
   }
 
-  function closeMobileMenu() {
-    setMobileOpen(false);
-  }
-
   return (
     <div className="cc-home">
       <div className="bg-circuit" />
@@ -112,80 +89,27 @@ export default function CodeCroupierHome() {
       </div>
 
       <header className={scrolled ? 'scrolled' : ''}>
-        <div className="brand">
-          <svg className="brand-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="24" cy="24" r="21" stroke="#7A7A7A" strokeWidth="1.4" opacity="0.5" />
-            <circle cx="24" cy="24" r="15" stroke="url(#gradRing)" strokeWidth="2" />
-            <path d="M24 9 A15 15 0 0 1 39 24" stroke="#00E8FF" strokeWidth="2" strokeLinecap="round" opacity="0.85" />
-            <text x="24" y="30" textAnchor="middle" fontFamily="Montserrat, sans-serif" fontWeight="800" fontSize="17" fill="#F5D67A">C</text>
-            <circle cx="24" cy="24" r="3" fill="#D72638" />
-            <defs>
-              <linearGradient id="gradRing" x1="0" y1="0" x2="48" y2="48">
-                <stop offset="0%" stopColor="#D72638" />
-                <stop offset="100%" stopColor="#9A00FF" />
-              </linearGradient>
-            </defs>
-          </svg>
-          <div className="brand-word">
-            <b>CODE<span>CROUPIER</span></b>
-            <i>THE DEALER IS CODE</i>
-          </div>
-        </div>
-
-        <nav className="menu">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className={activeNav === link.href ? 'active' : ''}
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
+        <a href="#home" className="brand" aria-label="CodeCroupier — home">
+          <img
+            className="brand-logo"
+            src="/codecroupier-logo-100-transparent.png"
+            alt="CodeCroupier — The Dealer Is Code"
+          />
+        </a>
 
         <div className="nav-actions">
           <div className="status-pill">
             <span className="dot" /> BSC Mainnet
           </div>
-          <button className="btn btn-secondary" onClick={() => scrollToId('about')}>
+          <button className="btn btn-secondary btn-get-started" onClick={() => scrollToId('about')}>
             Get Started
           </button>
           <button className="btn btn-primary" onClick={() => showToast()}>
             Connect Wallet
           </button>
-          <button
-            className="hamburger"
-            aria-label="Menu"
-            onClick={() => setMobileOpen((o) => !o)}
-          >
-            <span /><span /><span />
-          </button>
         </div>
       </header>
-
-      {/* mobile menu */}
-      {mobileOpen && (
-        <div
-          style={{
-            display: 'flex',
-            position: 'sticky',
-            top: 65,
-            zIndex: 49,
-            background: '#050505',
-            borderBottom: '1px solid var(--cc-graphite)',
-            padding: '18px 8vw',
-            flexDirection: 'column',
-            gap: 16,
-          }}
-        >
-          {NAV_LINKS.map((link) => (
-            <a key={link.href} href={link.href} onClick={closeMobileMenu}>
-              {link.label}
-            </a>
-          ))}
-        </div>
-      )}
+      <div className="header-spacer" aria-hidden="true" />
 
       <section
         className="hero"
