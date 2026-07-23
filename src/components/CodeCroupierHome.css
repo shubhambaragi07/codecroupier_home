@@ -65,7 +65,9 @@ html{ scroll-behavior:smooth; } /* safe to remove if your app already sets this 
 /* ---------- top nav ---------- */
 .cc-home header{
   position:fixed; top:0; left:0; right:0; width:100%; z-index:60;
-  display:flex; align-items:center; justify-content:space-between;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
   gap:12px;
   min-height:70px;
   padding:14px 32px;
@@ -75,8 +77,6 @@ html{ scroll-behavior:smooth; } /* safe to remove if your app already sets this 
   transition:background .3s ease, border-color .3s ease;
 }
 .cc-home header.scrolled{ background:rgba(3,3,3,0.92); border-color:#3a1015; }
-/* reserves the header's height in normal flow so fixed positioning
-   doesn't make the hero jump up underneath it */
 .cc-home .header-spacer{ height:70px; width:100%; }
 .cc-home .brand{ display:flex; align-items:center; gap:12px; min-width:0; flex-shrink:0; }
 .cc-home header .brand-logo{ height:40px; width:auto; display:block; }
@@ -94,7 +94,40 @@ html{ scroll-behavior:smooth; } /* safe to remove if your app already sets this 
 }
 .cc-home .brand-word i{ font-style:normal; font-size:9px; letter-spacing:3px; color:var(--cc-silver-bd); margin-top:2px; white-space:nowrap; }
 
-.cc-home .nav-actions{ display:flex; align-items:center; gap:12px; flex-shrink:0; }
+/* ---------- header nav links ---------- */
+.cc-home .nav-links{
+  display:flex; align-items:center; justify-content:center;
+  gap:28px;
+  font-family:var(--cc-font-body); font-weight:600; font-size:13.5px;
+}
+.cc-home .nav-links a{
+  color:var(--cc-silver); transition:color .2s ease; white-space:nowrap; position:relative;
+  padding-bottom:2px;
+}
+.cc-home .nav-links a::after{
+  content:''; position:absolute; left:0; right:0; bottom:-6px; height:2px;
+  background:linear-gradient(90deg,var(--cc-red-neon),var(--cc-purple));
+  transform:scaleX(0); transform-origin:left; transition:transform .25s ease;
+}
+.cc-home .nav-links a:hover{ color:#fff; }
+.cc-home .nav-links a:hover::after{ transform:scaleX(1); }
+.cc-home .nav-links .nav-mobile-cta{ display:none; } /* only shown inside the mobile dropdown */
+
+.cc-home .nav-toggle{
+  display:none; flex-direction:column; justify-content:center; align-items:center;
+  gap:5px; width:38px; height:38px; border-radius:8px; flex-shrink:0;
+  background:transparent; border:1px solid var(--cc-graphite); cursor:pointer;
+}
+.cc-home .nav-toggle span{
+  width:18px; height:2px; background:var(--cc-silver-lt); border-radius:2px;
+  transition:transform .25s ease, opacity .2s ease;
+}
+.cc-home .nav-toggle:hover{ border-color:var(--cc-red-neon); }
+.cc-home .nav-toggle.open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+.cc-home .nav-toggle.open span:nth-child(2){ opacity:0; }
+.cc-home .nav-toggle.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+.cc-home .nav-actions{ display:flex; align-items:center; justify-content:flex-end; gap:12px; flex-shrink:0; }
 
 .cc-home .btn{
   font-family:var(--cc-font-body); font-weight:600; font-size:13.5px;
@@ -281,10 +314,14 @@ html{ scroll-behavior:smooth; } /* safe to remove if your app already sets this 
 .cc-home footer{ position:relative; z-index:1; padding:52px 8vw 30px; border-top:1px solid var(--cc-graphite); background:var(--cc-coal); }
 .cc-home .foot-top{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:40px; margin-bottom:36px; }
 .cc-home .foot-brand p{ color:var(--cc-silver); font-size:13.5px; max-width:300px; line-height:1.6; margin-top:14px; }
-.cc-home .foot-links{ display:flex; gap:64px; flex-wrap:wrap; }
-.cc-home .foot-col h4{ font-family:var(--cc-font-head); font-size:13px; letter-spacing:1px; color:var(--cc-silver-lt); margin:0 0 14px; text-transform:uppercase; }
-.cc-home .foot-col a{ display:block; font-size:13.5px; color:var(--cc-silver); margin-bottom:10px; transition:.2s; }
-.cc-home .foot-col a:hover{ color:var(--cc-cyan); }
+.cc-home .foot-social h4{ font-family:var(--cc-font-head); font-size:13px; letter-spacing:1px; color:var(--cc-silver-lt); margin:0 0 14px; text-transform:uppercase; }
+.cc-home .social-row{ display:flex; gap:12px; flex-wrap:wrap; }
+.cc-home .social-row a{
+  font-family:var(--cc-font-mono); font-size:12.5px; color:var(--cc-silver-lt);
+  border:1px solid var(--cc-graphite); border-radius:20px; padding:9px 18px;
+  transition:.2s ease; white-space:nowrap;
+}
+.cc-home .social-row a:hover{ border-color:var(--cc-cyan); color:#fff; box-shadow:0 0 14px rgba(0,232,255,0.2); }
 .cc-home .foot-bottom{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; border-top:1px solid var(--cc-graphite); padding-top:22px; }
 .cc-home .foot-bottom p{ font-size:12px; color:var(--cc-silver-bd); margin:0; max-width:640px; line-height:1.6; }
 .cc-home .foot-bottom .small{ font-family:var(--cc-font-mono); font-size:11.5px; }
@@ -302,31 +339,50 @@ html{ scroll-behavior:smooth; } /* safe to remove if your app already sets this 
 .cc-home .toast.show{ transform:translateX(-50%) translateY(0); }
 .cc-home .toast .dot{ width:8px; height:8px; border-radius:50%; background:var(--cc-red-neon); box-shadow:0 0 8px var(--cc-red-neon); flex-shrink:0; }
 
-/* ---------- responsive nav breakpoints ---------- */
-/* No nav links anymore — the header is just the logo + CTAs, so it only
-   needs to shed the least-important pieces as space runs out. */
+/* ---------- responsive nav ---------- */
+@media (max-width:960px){
+  .cc-home .nav-links{
+    position:fixed; left:0; right:0; top:70px; z-index:59;
+    flex-direction:column; align-items:stretch; gap:0;
+    background:rgba(3,3,3,0.97); backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--cc-graphite);
+    max-height:0; overflow:hidden; opacity:0;
+    transition:max-height .3s ease, opacity .25s ease;
+    padding:0 5vw;
+  }
+  .cc-home .nav-links.open{ max-height:520px; opacity:1; padding:14px 5vw 22px; }
+  .cc-home .nav-links a{ padding:12px 0; border-bottom:1px solid #1c1c1c; }
+  .cc-home .nav-links a::after{ display:none; }
+  .cc-home .nav-links .nav-mobile-cta{
+    display:inline-flex; width:100%; justify-content:center;
+    margin-top:16px; padding:13px 20px;
+  }
+  .cc-home .nav-toggle{ display:flex; }
+}
 
 @media (max-width:860px){
   .cc-home header{ padding:12px 5vw; min-height:66px; }
   .cc-home .header-spacer{ height:66px; }
+  .cc-home .nav-links{ top:66px; }
   .cc-home header .nav-actions .status-pill{ display:none; }
   .cc-home .about{ gap:36px; }
 }
 
 @media (max-width:640px){
-  .cc-home .btn-get-started{ display:none; }
-  .cc-home header{ min-height:58px; }
+  .cc-home header{ min-height:58px; gap:8px; }
   .cc-home .header-spacer{ height:58px; }
+  .cc-home .nav-links{ top:58px; }
   .cc-home header .brand-logo{ height:32px; }
-  .cc-home .nav-actions{ gap:8px; }
-  .cc-home .nav-actions .btn{ padding:10px 16px; font-size:13px; }
+  .cc-home .nav-actions{ gap:10px; }
+  /* hide the header's own Connect Wallet on mobile — it moves into the dropdown */
+  .cc-home header .nav-actions .nav-desktop-cta{ display:none; }
 }
 
 @media (max-width:400px){
   .cc-home header{ padding:10px 16px; min-height:50px; }
   .cc-home .header-spacer{ height:50px; }
-  .cc-home header .brand-logo{ height:28px; }
-  .cc-home .nav-actions .btn{ padding:9px 13px; }
+  .cc-home .nav-links{ top:50px; }
+  .cc-home header .brand-logo{ height:26px; }
   .cc-home section{ padding:64px 6vw; }
   .cc-home .cta-band{ padding:64px 6vw; }
 }

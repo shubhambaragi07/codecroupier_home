@@ -25,6 +25,15 @@ const TICKER_DATA = [
   ['MIN. STAKE', '100 CC-CHIP', ''],
 ];
 
+const NAV_LINKS = [
+  ['Home', '#home'],
+  ['How It Works', '#how'],
+  ['Meet Cody', '#meet-cody'],
+  ['About', '#about'],
+  ['Whitepaper', '#whitepaper'],
+  ['Roulette', '#roulette'],
+];
+
 const TOTAL_SLIDES = 3;
 const DEFAULT_TOAST = 'Wallet not connected — this is a design preview.';
 
@@ -32,6 +41,7 @@ export default function CodeCroupierHome() {
   const [scrolled, setScrolled] = useState(false);
   const [slide, setSlide] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [toast, setToast] = useState({ show: false, msg: DEFAULT_TOAST });
   const toastTimeoutRef = useRef(null);
 
@@ -65,6 +75,16 @@ export default function CodeCroupierHome() {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   }
 
+  function closeMobileNav() {
+    setMobileOpen(false);
+  }
+
+  function handleNavClick(e, href) {
+    e.preventDefault();
+    scrollToId(href.replace('#', ''));
+    closeMobileNav();
+  }
+
   function showToast(msg) {
     clearTimeout(toastTimeoutRef.current);
     setToast({ show: true, msg: msg || DEFAULT_TOAST });
@@ -79,6 +99,11 @@ export default function CodeCroupierHome() {
     showToast(msg);
   }
 
+  function handleMobileConnect() {
+    showToast();
+    closeMobileNav();
+  }
+
   return (
     <div className="cc-home">
       <div className="bg-circuit" />
@@ -89,7 +114,7 @@ export default function CodeCroupierHome() {
       </div>
 
       <header className={scrolled ? 'scrolled' : ''}>
-        <a href="#home" className="brand" aria-label="CodeCroupier — home">
+        <a href="" className="brand" aria-label="CodeCroupier — home">
           <img
             className="brand-logo"
             src="/codecroupier-logo-100-transparent.png"
@@ -97,15 +122,33 @@ export default function CodeCroupierHome() {
           />
         </a>
 
+        <nav className={`nav-links${mobileOpen ? ' open' : ''}`}>
+          {NAV_LINKS.map(([label, href]) => (
+            <a key={href} href={href} onClick={(e) => handleNavClick(e, href)}>
+              {label}
+            </a>
+          ))}
+          <button className="btn btn-primary nav-mobile-cta" onClick={handleMobileConnect}>
+            Connect Wallet
+          </button>
+        </nav>
+
         <div className="nav-actions">
           <div className="status-pill">
             <span className="dot" /> BSC Mainnet
           </div>
-          <button className="btn btn-secondary btn-get-started" onClick={() => scrollToId('about')}>
-            Get Started
-          </button>
-          <button className="btn btn-primary" onClick={() => showToast()}>
+          <button className="btn btn-primary nav-desktop-cta" onClick={() => showToast()}>
             Connect Wallet
+          </button>
+          <button
+            className={`nav-toggle${mobileOpen ? ' open' : ''}`}
+            aria-label="Toggle menu"
+            aria-expanded={mobileOpen}
+            onClick={() => setMobileOpen((o) => !o)}
+          >
+            <span />
+            <span />
+            <span />
           </button>
         </div>
       </header>
@@ -323,36 +366,18 @@ export default function CodeCroupierHome() {
         <div className="foot-top">
           <div className="foot-brand">
             <div className="brand">
-              {/* <svg width="30" height="30" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="24" cy="24" r="15" stroke="#7A7A7A" strokeWidth="2" />
-                <text x="24" y="30" textAnchor="middle" fontFamily="Montserrat, sans-serif" fontWeight="800" fontSize="17" fill="#F5D67A">C</text>
-              </svg> */}
               <div className="brand-word"><b>CODE<span>CROUPIER</span></b></div>
             </div>
             <p>A fully on-chain casino platform powered by verifiable smart-contract logic and C-Chip ($CCHIP).</p>
           </div>
-          <div className="foot-links">
-            <div className="foot-col">
-              <h4>Platform</h4>
-              <a href="#home">Home</a>
-              <a href="#about">About</a>
-              <a href="#how">How It Works</a>
-              <a href="#roulette">Roulette</a>
-            </div>
-            <div className="foot-col">
-              <h4>Resources</h4>
-              <a href="#whitepaper">Whitepaper</a>
-              <a href="#tokenomics">Tokenomics</a>
-              <a href="#" onClick={(e) => handleExtLink(e, 'Contract address will be published at launch.')}>Contract Address</a>
-              <a href="#risk">Risk Disclosure</a>
-            </div>
-            <div className="foot-col">
-              <h4>Community</h4>
+          {/* <div className="foot-social">
+            <h4>Community</h4>
+            <div className="social-row">
               <a href="#" onClick={(e) => handleExtLink(e, 'Community links go live at launch.')}>Telegram</a>
               <a href="#" onClick={(e) => handleExtLink(e, 'Community links go live at launch.')}>X / Twitter</a>
               <a href="#" onClick={(e) => handleExtLink(e, 'Community links go live at launch.')}>Discord</a>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="foot-bottom">
           <p id="risk">CodeCroupier and C-Chip involve on-chain risk. Digital assets are volatile — only participate with funds you can afford to lose. This is not financial advice.</p>
