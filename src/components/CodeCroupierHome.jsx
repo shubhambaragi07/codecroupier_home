@@ -323,10 +323,10 @@ export default function CodeCroupierHome() {
         <div className="foot-top">
           <div className="foot-brand">
             <div className="brand">
-              <svg width="30" height="30" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              {/* <svg width="30" height="30" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="24" cy="24" r="15" stroke="#7A7A7A" strokeWidth="2" />
                 <text x="24" y="30" textAnchor="middle" fontFamily="Montserrat, sans-serif" fontWeight="800" fontSize="17" fill="#F5D67A">C</text>
-              </svg>
+              </svg> */}
               <div className="brand-word"><b>CODE<span>CROUPIER</span></b></div>
             </div>
             <p>A fully on-chain casino platform powered by verifiable smart-contract logic and C-Chip ($CCHIP).</p>
