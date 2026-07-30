@@ -246,6 +246,38 @@ html{ scroll-behavior:smooth; } /* safe to remove if your app already sets this 
 .cc-home .ticker-item .up{ color:var(--cc-green); }
 .cc-home .ticker-item .tag{ color:var(--cc-purple); }
 
+/* ---------- contract address ---------- */
+.cc-home .contract-section{ padding-top:54px; padding-bottom:0; }
+.cc-home .contract-card{
+  max-width:1040px; margin:0 auto; padding:30px 32px;
+  display:grid; grid-template-columns:minmax(0, 1fr) auto; gap:28px; align-items:center;
+  background:linear-gradient(120deg, rgba(215,38,56,.12), rgba(154,0,255,.08) 52%, rgba(0,232,255,.07));
+  border:1px solid rgba(255,46,85,.34); border-radius:16px;
+  box-shadow:0 16px 40px rgba(0,0,0,.24);
+}
+.cc-home .contract-card .eyebrow{ margin-bottom:12px; }
+.cc-home .contract-card h2{ font-family:var(--cc-font-head); font-size:clamp(22px, 3vw, 30px); color:#fff; margin:0 0 9px; }
+.cc-home .contract-card p{ color:var(--cc-silver); font-size:14px; margin:0; line-height:1.6; }
+.cc-home .contract-address-wrap{ display:flex; align-items:center; gap:10px; min-width:0; }
+.cc-home .contract-address-wrap code{
+  display:block; max-width:430px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  padding:13px 14px; border:1px solid var(--cc-graphite); border-radius:10px;
+  background:rgba(0,0,0,.48); color:var(--cc-cyan); font-family:var(--cc-font-mono); font-size:12px;
+}
+.cc-home .copy-contract{ min-height:46px; padding:10px 16px; }
+.cc-home .copy-contract svg{ width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.8; }
+@media (max-width:820px){
+  .cc-home .contract-card{ grid-template-columns:1fr; }
+  .cc-home .contract-address-wrap code{ max-width:calc(100vw - 190px); }
+}
+@media (max-width:480px){
+  .cc-home .contract-section{ padding-top:36px; }
+  .cc-home .contract-card{ padding:24px 20px; gap:20px; }
+  .cc-home .contract-address-wrap{ align-items:stretch; flex-direction:column; }
+  .cc-home .contract-address-wrap code{ max-width:100%; text-overflow:clip; overflow-wrap:anywhere; white-space:normal; }
+  .cc-home .copy-contract{ justify-content:center; }
+}
+
 /* ---------- sections ---------- */
 .cc-home section{ position:relative; z-index:1; padding:96px 8vw; }
 .cc-home .section-head{ text-align:center; max-width:640px; margin:0 auto 56px; }

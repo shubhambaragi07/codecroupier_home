@@ -36,6 +36,7 @@ const NAV_LINKS = [
 ];
 
 const TOTAL_SLIDES = 3;
+const CONTRACT_ADDRESS = '0xf73b02959560b42a5aa249805f1c653b611925f0';
 const DEFAULT_TOAST = 'Wallet not connected — this is a design preview.';
 
 export default function CodeCroupierHome() {
@@ -103,6 +104,23 @@ export default function CodeCroupierHome() {
   function handleMobileConnect() {
     showToast();
     closeMobileNav();
+  }
+
+  async function copyContractAddress() {
+    try {
+      await navigator.clipboard.writeText(CONTRACT_ADDRESS);
+    } catch {
+      const input = document.createElement('textarea');
+      input.value = CONTRACT_ADDRESS;
+      input.setAttribute('readonly', '');
+      input.style.position = 'fixed';
+      input.style.opacity = '0';
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      input.remove();
+    }
+    showToast('CCCHIP contract address copied.');
   }
 
   return (
@@ -237,6 +255,26 @@ export default function CodeCroupierHome() {
           ))}
         </div>
       </div>
+
+      <section className="contract-section" aria-labelledby="contract-title">
+        <div className="contract-card">
+          <div>
+            <div className="eyebrow">OFFICIAL TOKEN CONTRACT</div>
+            <h2 id="contract-title">CCCHIP Contract Address</h2>
+            <p>Always verify the official address before adding CCCHIP to your wallet.</p>
+          </div>
+          <div className="contract-address-wrap">
+            <code>{CONTRACT_ADDRESS}</code>
+            <button className="btn btn-primary copy-contract" onClick={copyContractAddress} aria-label="Copy CCCHIP contract address">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="8" y="8" width="11" height="11" rx="2" />
+                <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+              </svg>
+              Copy
+            </button>
+          </div>
+        </div>
+      </section>
 
       <section id="how">
         <div className="section-head">
