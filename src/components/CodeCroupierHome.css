@@ -403,7 +403,7 @@ html{ scroll-behavior:smooth; } /* safe to remove if your app already sets this 
   .cc-home header{ min-height:58px; gap:8px; }
   .cc-home .header-spacer{ height:58px; }
   .cc-home .nav-links{ top:58px; }
-  .cc-home header .brand-logo{ height:32px; }
+  .cc-home header .brand-logo{ height:44px; }   /* was 32px */
   .cc-home .nav-actions{ gap:10px; }
   /* hide the header's own Connect Wallet on mobile — it moves into the dropdown */
   .cc-home header .nav-actions .nav-desktop-cta{ display:none; }
@@ -413,7 +413,7 @@ html{ scroll-behavior:smooth; } /* safe to remove if your app already sets this 
   .cc-home header{ padding:10px 16px; min-height:50px; }
   .cc-home .header-spacer{ height:50px; }
   .cc-home .nav-links{ top:50px; }
-  .cc-home header .brand-logo{ height:26px; }
+  .cc-home header .brand-logo{ height:38px; }   /* was 26px */
   .cc-home section{ padding:64px 6vw; }
 }
 
