@@ -136,7 +136,7 @@ export default function CodeCroupierHome() {
         <a href="#home" className="brand" aria-label="CodeCroupier — home">
           <img
             className="brand-logo"
-            src="/codecroupier-logo-100-transparent.png"
+            src="/codecroupier-lockup-transparent.png"
             alt="CodeCroupier — The Dealer Is Code"
           />
         </a>
